@@ -1,0 +1,81 @@
+<mockup version="1.0" skin="sketch" measuredW="370" measuredH="644" mockupW="362" mockupH="642">
+  <controls>
+    <control controlID="0" controlTypeID="com.balsamiq.mockups::Image" x="8" y="2" w="362" h="642" measuredW="281" measuredH="543" zOrder="0" locked="true" isInGroup="-1">
+      <controlProperties>
+        <src>./assets/SamsungGalaxyS2.png</src>
+        <text/>
+      </controlProperties>
+    </control>
+    <control controlID="6" controlTypeID="com.balsamiq.mockups::Canvas" x="30" y="100" w="318" h="48" measuredW="100" measuredH="70" zOrder="1" locked="true" isInGroup="-1"/>
+    <control controlID="7" controlTypeID="com.balsamiq.mockups::IconLabel" x="36" y="108" w="-1" h="-1" measuredW="32" measuredH="53" zOrder="2" locked="true" isInGroup="-1">
+      <controlProperties>
+        <icon>BulletsIcon%7Cmedium</icon>
+        <text>%20</text>
+      </controlProperties>
+    </control>
+    <control controlID="8" controlTypeID="com.balsamiq.mockups::Label" x="76" y="108" w="-1" h="-1" measuredW="189" measuredH="33" zOrder="3" locked="true" isInGroup="-1">
+      <controlProperties>
+        <bold>true</bold>
+        <size>24</size>
+        <text>Campanha%20%3A%20SMS</text>
+      </controlProperties>
+    </control>
+    <control controlID="10" controlTypeID="com.balsamiq.mockups::List" x="30" y="148" w="318" h="406" measuredW="100" measuredH="126" zOrder="4" locked="true" isInGroup="-1">
+      <controlProperties>
+        <hasHeader>false</hasHeader>
+        <selectedIndex>-1</selectedIndex>
+        <size>16</size>
+        <text/>
+      </controlProperties>
+    </control>
+    <control controlID="29" controlTypeID="__group__" x="45" y="161" w="233" h="24" measuredW="233" measuredH="24" zOrder="5" locked="false" isInGroup="-1">
+      <groupChildrenDescriptors>
+        <control controlID="0" controlTypeID="com.balsamiq.mockups::Label" x="89" y="0" w="-1" h="-1" measuredW="144" measuredH="24" zOrder="0" locked="false" isInGroup="29">
+          <controlProperties>
+            <bold>false</bold>
+            <size>16</size>
+            <text>Retorno%2020140M0D</text>
+          </controlProperties>
+        </control>
+        <control controlID="1" controlTypeID="com.balsamiq.mockups::Label" x="0" y="0" w="-1" h="-1" measuredW="53" measuredH="24" zOrder="1" locked="false" isInGroup="29">
+          <controlProperties>
+            <bold>true</bold>
+            <size>16</size>
+            <text>Nome%3A</text>
+          </controlProperties>
+        </control>
+      </groupChildrenDescriptors>
+    </control>
+    <control controlID="40" controlTypeID="__group__" x="45" y="185" w="226" h="24" measuredW="226" measuredH="24" zOrder="6" locked="false" isInGroup="-1">
+      <groupChildrenDescriptors>
+        <control controlID="0" controlTypeID="com.balsamiq.mockups::Label" x="0" y="0" w="-1" h="-1" measuredW="126" measuredH="24" zOrder="0" locked="false" isInGroup="40">
+          <controlProperties>
+            <bold>true</bold>
+            <size>16</size>
+            <text>Falhas%20de%20Envio%3A</text>
+          </controlProperties>
+        </control>
+        <control controlID="1" controlTypeID="com.balsamiq.mockups::Label" x="150" y="0" w="76" h="24" measuredW="23" measuredH="24" zOrder="1" locked="false" isInGroup="40">
+          <controlProperties>
+            <align>right</align>
+            <bold>false</bold>
+            <size>16</size>
+            <text>10</text>
+          </controlProperties>
+        </control>
+      </groupChildrenDescriptors>
+    </control>
+    <control controlID="41" controlTypeID="com.balsamiq.mockups::Menu" x="30" y="233" w="318" h="-1" measuredW="150" measuredH="99" zOrder="7" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Marcus%20Vin%EDcius%20Bessa%0AMsg%3A%20N%FAmero%20inv%E1lido.%0A--%0ASara%20Alves%20Bessa%0AMsg%3A%20N%FAmero%20inv%E1lido.</text>
+      </controlProperties>
+    </control>
+    <control controlID="44" controlTypeID="com.balsamiq.mockups::Label" x="45" y="209" w="-1" h="-1" measuredW="79" measuredH="24" zOrder="8" locked="false" isInGroup="-1">
+      <controlProperties>
+        <bold>true</bold>
+        <size>16</size>
+        <text>Relat%F3rio%3A</text>
+      </controlProperties>
+    </control>
+  </controls>
+</mockup>

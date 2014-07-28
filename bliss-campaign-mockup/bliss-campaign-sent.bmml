@@ -1,0 +1,140 @@
+<mockup version="1.0" skin="sketch" measuredW="370" measuredH="644" mockupW="362" mockupH="642">
+  <controls>
+    <control controlID="0" controlTypeID="com.balsamiq.mockups::Image" x="8" y="2" w="362" h="642" measuredW="281" measuredH="543" zOrder="0" locked="true" isInGroup="-1">
+      <controlProperties>
+        <src>./assets/SamsungGalaxyS2.png</src>
+        <text/>
+      </controlProperties>
+    </control>
+    <control controlID="6" controlTypeID="com.balsamiq.mockups::Canvas" x="30" y="100" w="318" h="48" measuredW="100" measuredH="70" zOrder="1" locked="true" isInGroup="-1"/>
+    <control controlID="7" controlTypeID="com.balsamiq.mockups::IconLabel" x="36" y="108" w="-1" h="-1" measuredW="32" measuredH="53" zOrder="2" locked="true" isInGroup="-1">
+      <controlProperties>
+        <icon>BulletsIcon%7Cmedium</icon>
+        <text>%20</text>
+      </controlProperties>
+    </control>
+    <control controlID="8" controlTypeID="com.balsamiq.mockups::Label" x="76" y="108" w="-1" h="-1" measuredW="189" measuredH="33" zOrder="3" locked="true" isInGroup="-1">
+      <controlProperties>
+        <bold>true</bold>
+        <size>24</size>
+        <text>Campanha%20%3A%20SMS</text>
+      </controlProperties>
+    </control>
+    <control controlID="10" controlTypeID="com.balsamiq.mockups::List" x="30" y="148" w="318" h="406" measuredW="100" measuredH="126" zOrder="4" locked="true" isInGroup="-1">
+      <controlProperties>
+        <hasHeader>false</hasHeader>
+        <selectedIndex>-1</selectedIndex>
+        <size>16</size>
+        <text/>
+      </controlProperties>
+    </control>
+    <control controlID="29" controlTypeID="__group__" x="45" y="161" w="251" h="24" measuredW="251" measuredH="24" zOrder="5" locked="false" isInGroup="-1">
+      <groupChildrenDescriptors>
+        <control controlID="0" controlTypeID="com.balsamiq.mockups::Label" x="107" y="0" w="-1" h="-1" measuredW="144" measuredH="24" zOrder="0" locked="false" isInGroup="29">
+          <controlProperties>
+            <bold>false</bold>
+            <size>16</size>
+            <text>Retorno%2020140M0D</text>
+          </controlProperties>
+        </control>
+        <control controlID="1" controlTypeID="com.balsamiq.mockups::Label" x="0" y="0" w="-1" h="-1" measuredW="89" measuredH="24" zOrder="1" locked="false" isInGroup="29">
+          <controlProperties>
+            <bold>true</bold>
+            <size>16</size>
+            <text>Campanha%3A</text>
+          </controlProperties>
+        </control>
+      </groupChildrenDescriptors>
+    </control>
+    <control controlID="35" controlTypeID="com.balsamiq.mockups::ProgressBar" x="45" y="316" w="288" h="28" measuredW="100" measuredH="20" zOrder="6" locked="false" isInGroup="-1">
+      <controlProperties>
+        <indeterminate>false</indeterminate>
+        <scrollBarValue>100</scrollBarValue>
+      </controlProperties>
+    </control>
+    <control controlID="36" controlTypeID="__group__" x="45" y="189" w="226" h="24" measuredW="226" measuredH="24" zOrder="7" locked="false" isInGroup="-1">
+      <groupChildrenDescriptors>
+        <control controlID="0" controlTypeID="com.balsamiq.mockups::Label" x="0" y="0" w="-1" h="-1" measuredW="141" measuredH="24" zOrder="0" locked="false" isInGroup="36">
+          <controlProperties>
+            <bold>true</bold>
+            <size>16</size>
+            <text>Total%20de%20Contatos%3A</text>
+          </controlProperties>
+        </control>
+        <control controlID="1" controlTypeID="com.balsamiq.mockups::Label" x="150" y="0" w="76" h="24" measuredW="32" measuredH="24" zOrder="1" locked="false" isInGroup="36">
+          <controlProperties>
+            <align>right</align>
+            <bold>false</bold>
+            <size>16</size>
+            <text>150</text>
+          </controlProperties>
+        </control>
+      </groupChildrenDescriptors>
+    </control>
+    <control controlID="37" controlTypeID="__group__" x="45" y="217" w="226" h="24" measuredW="226" measuredH="24" zOrder="8" locked="false" isInGroup="-1">
+      <groupChildrenDescriptors>
+        <control controlID="0" controlTypeID="com.balsamiq.mockups::Label" x="0" y="0" w="-1" h="-1" measuredW="150" measuredH="24" zOrder="0" locked="false" isInGroup="37">
+          <controlProperties>
+            <bold>true</bold>
+            <size>16</size>
+            <text>Total%20de%20Respostas%3A</text>
+          </controlProperties>
+        </control>
+        <control controlID="1" controlTypeID="com.balsamiq.mockups::Label" x="150" y="0" w="76" h="24" measuredW="25" measuredH="24" zOrder="1" locked="false" isInGroup="37">
+          <controlProperties>
+            <align>right</align>
+            <bold>false</bold>
+            <size>16</size>
+            <text>90</text>
+          </controlProperties>
+        </control>
+      </groupChildrenDescriptors>
+    </control>
+    <control controlID="38" controlTypeID="__group__" x="45" y="245" w="226" h="24" measuredW="226" measuredH="24" zOrder="9" locked="false" isInGroup="-1">
+      <groupChildrenDescriptors>
+        <control controlID="0" controlTypeID="com.balsamiq.mockups::Label" x="0" y="0" w="-1" h="-1" measuredW="159" measuredH="24" zOrder="0" locked="false" isInGroup="38">
+          <controlProperties>
+            <bold>true</bold>
+            <size>16</size>
+            <text>Mensagens%20Enviadas%3A</text>
+          </controlProperties>
+        </control>
+        <control controlID="1" controlTypeID="com.balsamiq.mockups::Label" x="150" y="0" w="76" h="24" measuredW="26" measuredH="24" zOrder="1" locked="false" isInGroup="38">
+          <controlProperties>
+            <align>right</align>
+            <bold>false</bold>
+            <size>16</size>
+            <text>80</text>
+          </controlProperties>
+        </control>
+      </groupChildrenDescriptors>
+    </control>
+    <control controlID="39" controlTypeID="com.balsamiq.mockups::Button" x="128" y="365" w="122" h="36" measuredW="119" measuredH="28" zOrder="10" locked="false" isInGroup="-1">
+      <controlProperties>
+        <href>bliss-campaign-report%26bm%3Bbliss-campaign-report.bmml%26bm%3Bbliss-campaign-report.bmml%26bm%3Bbliss-campaign-report.bmml</href>
+        <map>%3Carea%20shape%3D%22rect%22%20coords%3D%22120%2C363%2C242%2C399%22%20href%3D%22bliss-campaign-report.bmml%22%20alt%3D%22bliss-campaign-report%22%20id%3D%2239%22/%3E</map>
+        <size>16</size>
+        <text>Ver%20Relat%F3rio</text>
+      </controlProperties>
+    </control>
+    <control controlID="40" controlTypeID="__group__" x="45" y="277" w="226" h="24" measuredW="226" measuredH="24" zOrder="11" locked="false" isInGroup="-1">
+      <groupChildrenDescriptors>
+        <control controlID="0" controlTypeID="com.balsamiq.mockups::Label" x="0" y="0" w="-1" h="-1" measuredW="126" measuredH="24" zOrder="0" locked="false" isInGroup="40">
+          <controlProperties>
+            <bold>true</bold>
+            <size>16</size>
+            <text>Falhas%20de%20Envio%3A</text>
+          </controlProperties>
+        </control>
+        <control controlID="1" controlTypeID="com.balsamiq.mockups::Label" x="150" y="0" w="76" h="24" measuredW="23" measuredH="24" zOrder="1" locked="false" isInGroup="40">
+          <controlProperties>
+            <align>right</align>
+            <bold>false</bold>
+            <size>16</size>
+            <text>10</text>
+          </controlProperties>
+        </control>
+      </groupChildrenDescriptors>
+    </control>
+  </controls>
+</mockup>

@@ -1,0 +1,18 @@
+<mockup version="1.0" skin="sketch" measuredW="370" measuredH="644" mockupW="362" mockupH="642">
+  <controls>
+    <control controlID="0" controlTypeID="com.balsamiq.mockups::Image" x="8" y="2" w="362" h="642" measuredW="281" measuredH="543" zOrder="0" locked="false" isInGroup="-1">
+      <controlProperties>
+        <src>./assets/SamsungGalaxyS2.png</src>
+        <text/>
+      </controlProperties>
+    </control>
+    <control controlID="4" controlTypeID="com.balsamiq.mockups::Image" x="30" y="78" w="-1" h="-1" measuredW="317" measuredH="479" zOrder="1" locked="false" isInGroup="-1">
+      <controlProperties>
+        <href>bliss-campaign-welcome%26bm%3Bbliss-campaign-welcome.bmml%26bm%3Bbliss-campaign-welcome.bmml%26bm%3Bbliss-campaign-welcome.bmml</href>
+        <map>%3Carea%20shape%3D%22rect%22%20coords%3D%2222%2C76%2C339%2C555%22%20href%3D%22bliss-campaign-welcome.bmml%22%20alt%3D%22bliss-campaign-welcome%22%20id%3D%224%22/%3E</map>
+        <src>./assets/salesforce-login2.png</src>
+        <text/>
+      </controlProperties>
+    </control>
+  </controls>
+</mockup>

@@ -1,0 +1,10 @@
+<mockup version="1.0" skin="sketch" measuredW="356" measuredH="644" mockupW="348" mockupH="642">
+  <controls>
+    <control controlID="0" controlTypeID="com.balsamiq.mockups::Image" x="8" y="2" w="348" h="642" measuredW="281" measuredH="543" zOrder="0" locked="false" isInGroup="-1">
+      <controlProperties>
+        <src>./assets/SamsungGalaxyS2.png</src>
+        <text/>
+      </controlProperties>
+    </control>
+  </controls>
+</mockup>
