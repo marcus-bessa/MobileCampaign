@@ -1,12 +1,4 @@
-/MobileCampaign/bin/*
-/MobileCampaign/gen/*
+MobileCampaign/bin/*
+MobileCampaign/gen/*
 
 *.class
-
-MobileCampaign/bin/classes/com/neoclouding/mobile/mobilecampaign/CampaignDetailFragment$1.class
-
-MobileCampaign/bin/classes/com/neoclouding/mobile/mobilecampaign/CampaignDetailFragment$1$1.class
-
-MobileCampaign/bin/classes/com/neoclouding/mobile/mobilecampaign/CampaignDetailFragment.class
-
-MobileCampaign/src/com/neoclouding/mobile/mobilecampaign/CampaignDetailFragment.java
