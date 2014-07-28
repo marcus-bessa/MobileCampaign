@@ -1,0 +1,82 @@
+{
+  "name": "forcedroid",
+  "version": "2.2.1",
+  "description": "Utilities for creating mobile apps based on the Salesforce Mobile SDK for Android",
+  "keywords": [
+    "salesforce mobile sdk",
+    "android",
+    "salesforce",
+    "mobile",
+    "sdk"
+  ],
+  "homepage": "https://github.com/forcedotcom/SalesforceMobileSDK-Android",
+  "bugs": {
+    "url": "https://github.com/forcedotcom/SalesforceMobileSDK-Android/issues"
+  },
+  "licenses": [
+    {
+      "type": "Salesforce.com Mobile SDK License",
+      "url": "https://raw.github.com/forcedotcom/SalesforceMobileSDK-Android/master/LICENSE.md"
+    }
+  ],
+  "bin": {
+    "forcedroid": "node/forcedroid.js"
+  },
+  "dependencies": {
+    "shelljs": ">=0.1.4"
+  },
+  "scripts": {
+    "prepublish": "./node/prepublish.js",
+    "postpublish": "./node/postpublish.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/forcedotcom/SalesforceMobileSDK-Android.git"
+  },
+  "author": {
+    "name": "Kevin Hawkins",
+    "email": "khawkins@salesforce.com"
+  },
+  "contributors": [
+    {
+      "name": "Wolfgang Mathurin",
+      "email": "wmathurin@salesforce.com"
+    },
+    {
+      "name": "Bharath Hariharan",
+      "email": "bhariharan@salesforce.com"
+    },
+    {
+      "name": "Akhilesh Gupta",
+      "email": "agupta@salesforce.com"
+    }
+  ],
+  "_id": "forcedroid@2.2.1",
+  "_shasum": "2e0a1fe6a932a71c05ca11750c07bd1ce0da8d59",
+  "_from": "forcedroid@",
+  "_npmVersion": "1.4.9",
+  "_npmUser": {
+    "name": "bhariharan",
+    "email": "bhariharan@salesforce.com"
+  },
+  "maintainers": [
+    {
+      "name": "bhariharan",
+      "email": "bhariharan@salesforce.com"
+    },
+    {
+      "name": "khawkins",
+      "email": "khawkins@salesforce.com"
+    },
+    {
+      "name": "wmathurin_sfdc",
+      "email": "wmathurin@salesforce.com"
+    }
+  ],
+  "dist": {
+    "shasum": "2e0a1fe6a932a71c05ca11750c07bd1ce0da8d59",
+    "tarball": "http://registry.npmjs.org/forcedroid/-/forcedroid-2.2.1.tgz"
+  },
+  "directories": {},
+  "_resolved": "https://registry.npmjs.org/forcedroid/-/forcedroid-2.2.1.tgz"
+}

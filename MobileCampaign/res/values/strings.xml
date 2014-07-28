@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name"><b>Campanhas</b></string>
+    <string name="app_package">com.neoclouding.mobile.mobilecampaign</string>
+    <string name="logout_button">Logout</string>
+    <string name="welcome">Bem-vindo %s</string>
+
+    <string-array name="campaignTypes_array">
+        <item>SMS</item>
+        <item>E-mail</item>
+    </string-array>
+
+    <string name="drawer_open">Abre o painel lateral</string>
+    <string name="drawer_close">Fecha o painel lateral</string>
+    <string name="title_activity_campaign_detail">CampaignDetailActivity</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+
+</resources>
