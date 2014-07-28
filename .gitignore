@@ -1,4 +1,7 @@
 MobileCampaign/bin/*
 MobileCampaign/gen/*
 
+forcedroid/native/SalesforceSDK/bin/*
+forcedroid/native/SalesforceSDK/gen/*
+
 *.class
