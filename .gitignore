@@ -1,2 +1,4 @@
 /MobileCampaign/bin/*
 /MobileCampaign/gen/*
+
+*.class
