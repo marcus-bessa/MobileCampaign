@@ -23,6 +23,7 @@ public class SalesforceDataLoader {
 	public static final String SOBJ_TASK = "Task";
 	public static final String SOBJ_CAMPAIGN = "Campaign";
 	public static final String SOBJ_CAMPAIGN_MEMBER = "CampaignMember";
+	public static final String SOBJ_MENSAGEM__C = "Mensagem__c";
 	
 	private RestClient client;
 	private String apiVersion;

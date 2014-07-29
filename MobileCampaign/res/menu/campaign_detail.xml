@@ -3,7 +3,6 @@
       tools:context="com.neoclouding.mobile.mobilecampaign.CampaignDetailActivity" >
 
     <item android:id="@+id/action_settings"
-        
           android:title="@string/action_settings"
           android:showAsAction="never"
           android:orderInCategory="100"
