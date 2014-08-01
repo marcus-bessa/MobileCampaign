@@ -24,13 +24,14 @@ public class SalesforceDataLoader {
 	public static final String SOBJ_CAMPAIGN = "Campaign";
 	public static final String SOBJ_CAMPAIGN_MEMBER = "CampaignMember";
 	public static final String SOBJ_MENSAGEM__C = "Mensagem__c";
-	
+	protected static final int LIMIT_MAX_RECORDS = 200;
+
 	private RestClient client;
 	private String apiVersion;
 	private Activity activity;
 
 	private class Default_AsyncRequestCallback implements AsyncRequestCallback {
-		
+
 		public Default_AsyncRequestCallback() {
 			super();
 		}
@@ -53,10 +54,10 @@ public class SalesforceDataLoader {
 	}
 
 	private final class Query_AsyncRequestCallback extends Default_AsyncRequestCallback implements AsyncRequestCallback {
-		
+
 		private String sObjName;
 		private Command cmd;
-		
+
 		public Query_AsyncRequestCallback(String sObjName, Command cmd) {
 			super();
 			this.sObjName = sObjName;
@@ -73,17 +74,17 @@ public class SalesforceDataLoader {
 				Map<String, Object> args = new HashMap<String, Object>();
 				args.put(Command.ARG_RECORDS, records);
 				cmd.setArguments(args);
-				
+
 				cmd.execute();
-				
+
 			} catch (Exception e) {
 				onError(e);
 			}
 		}
 	}
 
-	
 	private Map<String, JSONArray> storage = new HashMap<String, JSONArray>();
+
 	public void clear() {
 		storage.clear();
 	}
@@ -118,29 +119,32 @@ public class SalesforceDataLoader {
 
 	/***************************************************************************
 	 * query
-	 * @throws UnsupportedEncodingException 
+	 * 
+	 * @throws UnsupportedEncodingException
 	 **************************************************************************/
 	public void query(final String sObjName, String soql, final Command cmd) throws UnsupportedEncodingException {
-		RestRequest restRequest = RestRequest.getRequestForQuery( apiVersion, soql );
+		RestRequest restRequest = RestRequest.getRequestForQuery(apiVersion, soql);
 		client.sendAsync(restRequest, new Query_AsyncRequestCallback(sObjName, cmd));
 	}
-	
+
 	/***************************************************************************
 	 * insert
-	 * @throws IOException 
+	 * 
+	 * @throws IOException
 	 **************************************************************************/
 	public void insert(final String objectType, final Map<String, Object> fields) throws IOException {
 		RestRequest restRequest = RestRequest.getRequestForCreate(apiVersion, objectType, fields);
 		client.sendAsync(restRequest, new Default_AsyncRequestCallback());
 	}
-	
+
 	/***************************************************************************
 	 * update
-	 * @throws IOException 
+	 * 
+	 * @throws IOException
 	 **************************************************************************/
 	public void update(String objectType, String objectId, Map<String, Object> fields) throws IOException {
 		RestRequest restRequest = RestRequest.getRequestForUpdate(apiVersion, objectType, objectId, fields);
 		client.sendAsync(restRequest, new Default_AsyncRequestCallback());
 	}
-	
+
 }

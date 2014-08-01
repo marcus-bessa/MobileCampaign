@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
@@ -41,10 +40,6 @@ public class CampaignDetailFragment extends MobileCampaignFragment {
 	public static final String ARG_RECORD_ID = "RECORD_ID";
 	private static final int MAX_SMS_MESSAGE_LENGTH = 160;
 
-	private String campaignID;
-	private String campaignName;
-	private String smsMessage;
-	private ArrayList<String> smsMessage_parts;
 	private SmsManager sms = SmsManager.getDefault();
 
 	private View rootView;
@@ -52,10 +47,10 @@ public class CampaignDetailFragment extends MobileCampaignFragment {
 	private Button btnSend;
 	private TextView smsProgressBarMessage;
 
-	private List<JSONObject> sentMessages;
-	private List<JSONObject> failMessages;
-
-	private boolean shouldContinue = true;
+	private String campaignID;
+	private String campaignName;
+	private String smsMessage;
+	private ArrayList<String> smsMessage_parts;
 
 	/***************************************************************************
 	 * Construtor padr‹o
@@ -116,32 +111,42 @@ public class CampaignDetailFragment extends MobileCampaignFragment {
 						smsProgressBarMessage.setVisibility(TextView.VISIBLE);
 
 						dataLoader.query(SalesforceDataLoader.SOBJ_CAMPAIGN_MEMBER,
-								"SELECT ID, CampaignId, ContactId, Contact.MobilePhone FROM CampaignMember WHERE CAMPAIGNID = '" + campaignID
-										+ "' and Status = 'aberto'", new AbstractCommand() {
+								"SELECT ID, ContactId, Contact.MobilePhone FROM CampaignMember WHERE CAMPAIGNID = '" + campaignID
+										+ "' and Status = 'aberto' LIMIT " + SalesforceDataLoader.LIMIT_MAX_RECORDS, new AbstractCommand() {
+
+									private int sentMessages;
+									private int failMessages;
+
+									private boolean shouldContinue = true;
 
 									@Override
 									public void execute() throws Exception {
 										JSONArray records = (JSONArray) this.args.get(ARG_RECORDS);
 
-										sentMessages = new ArrayList<JSONObject>();
-										failMessages = new ArrayList<JSONObject>();
+										sentMessages = 0;
+										failMessages = 0;
 
 										sendSMS(records);
 
-										createTasks();
-
-										resetProgressBar(failMessages, "Registrando falhas de envio ...");
-
-										updateCampaignMembers_Fail2Sent();
+										// createTasks();
+										// resetProgressBar(failMessages, "Registrando falhas de envio ...");
+										// updateCampaignMembers_Fail2Sent();
 
 										updateViewComponents();
 
 										showDialog("Campanha enviada.");
 									}
 
-									private void sendSMS(JSONArray records) throws JSONException {
+									/**
+									 * SEND SMS
+									 */
+									private void sendSMS(JSONArray records) throws JSONException, IOException {
 										int numberOfMembers = records.length();
 										initViewComponentes(numberOfMembers);
+
+										Date date = new Date();
+										SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+										String today = sdf.format(date);
 
 										Set<String> phones = new HashSet<String>();
 
@@ -151,24 +156,38 @@ public class CampaignDetailFragment extends MobileCampaignFragment {
 
 												final JSONObject campaignMember = records.getJSONObject(i);
 												final JSONObject contact = campaignMember.getJSONObject("Contact");
+												final String campaignMemberId = campaignMember.getString("Id");
 												String phone_Num = contact.getString("MobilePhone");
 
 												phone_Num = (phone_Num != null) ? (phone_Num.replaceAll("[^0-9]", "")) : "";
+
+												// STEP 1 : SEND SMS
 												boolean isSuccess = phones.contains(phone_Num) ? false : sendSMS(phone_Num);
 
 												if (isSuccess) {
-													sentMessages.add(campaignMember);
-													progressBar.setProgress(sentMessages.size());
+													smsProgressBarMessage.setText("Registrando tarefas (" + i + "/" + numberOfMembers + ")");
+
+													final String contactID = campaignMember.getString("ContactId");
+
+													// STEP 2 : CREATE RELATED TASK
+													createTask(today, campaignID, contactID);
+
+													// STEP 3 : UPDATE CAMPAIGN MEMBER STATUS
+													updateCampaignMemberStatus_Success2Sent(campaignMemberId);
+
 													phones.add(phone_Num);
+													sentMessages++;
 
 												} else {
-													failMessages.add(campaignMember);
-													progressBar.setSecondaryProgress(failMessages.size());
+													// IF FAIL : UPDATE CAMPAIGN MEMBER STATUS
+													updateCampaignMemberStatus_Fail(campaignMemberId);
+
+													failMessages++;
+
 												}
 											} else {
 												break;
 											}
-
 										}
 									}
 
@@ -181,11 +200,11 @@ public class CampaignDetailFragment extends MobileCampaignFragment {
 												if (smsMessage.length() > MAX_SMS_MESSAGE_LENGTH) {
 
 													for (int i = 0; i < smsMessage_parts.size(); i++) {
-														// sms.sendTextMessage(phone_Num, null, smsMessage_parts.get(i), null, null);
+														sms.sendTextMessage(phone_Num, null, smsMessage_parts.get(i), null, null);
 													}
 
 												} else {
-													// sms.sendTextMessage(phone_Num, null, smsMessage, null, null);
+													sms.sendTextMessage(phone_Num, null, smsMessage, null, null);
 												}
 
 												result = true;
@@ -199,28 +218,28 @@ public class CampaignDetailFragment extends MobileCampaignFragment {
 										return result;
 									}
 
-									private int createTasks() throws JSONException, IOException {
-										resetProgressBar(sentMessages, "Registrando tarefas ...");
-
-										Date date = new Date();
-										SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
-										String today = sdf.format(date);
-										int i = 1;
-
-										for (JSONObject campaignMember : sentMessages) {
-											smsProgressBarMessage.setText("Registrando tarefas (" + i++ + "/" + sentMessages.size() + ")");
-
-											final String campaignMemberId = campaignMember.getString("Id");
-											final String campaignId = campaignMember.getString("CampaignId");
-											final String contactID = campaignMember.getString("ContactId");
-
-											createTask(today, campaignId, contactID);
-											updateCampaignMemberStatus_Success2Sent(campaignMemberId);
-
-											progressBar.incrementProgressBy(1);
-										}
-										return i;
-									}
+									// private int createTasks() throws JSONException, IOException {
+									// resetProgressBar(sentMessages, "Registrando tarefas ...");
+									//
+									// Date date = new Date();
+									// SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+									// String today = sdf.format(date);
+									// int i = 1;
+									//
+									// for (JSONObject campaignMember : sentMessages) {
+									// smsProgressBarMessage.setText("Registrando tarefas (" + i++ + "/" + sentMessages.size() + ")");
+									//
+									// final String campaignMemberId = campaignMember.getString("Id");
+									// final String campaignId = campaignMember.getString("CampaignId");
+									// final String contactID = campaignMember.getString("ContactId");
+									//
+									// createTask(today, campaignId, contactID);
+									// updateCampaignMemberStatus_Success2Sent(campaignMemberId);
+									//
+									// progressBar.incrementProgressBy(1);
+									// }
+									// return i;
+									// }
 
 									private void createTask(String today, final String campaignId, final String contactID) throws IOException {
 										Map<String, Object> fields = new HashMap<String, Object>();
@@ -243,38 +262,42 @@ public class CampaignDetailFragment extends MobileCampaignFragment {
 										dataLoader.update(SalesforceDataLoader.SOBJ_CAMPAIGN_MEMBER, campaignMemberId, fields);
 									}
 
-									private void updateCampaignMembers_Fail2Sent() throws JSONException, IOException {
-										int i = 1;
+									// private void updateCampaignMembers_Fail2Sent() throws JSONException, IOException {
+									// int i = 1;
+									//
+									// for (JSONObject campaignMember : failMessages) {
+									// smsProgressBarMessage.setText("Registrando falhas de envio (" + i++ + "/" + sentMessages.size() + ")");
+									//
+									// final String campaignMemberId = campaignMember.getString("Id");
+									//
+									// updateCampaignMemberStatus_Fail(campaignMemberId);
+									//
+									// progressBar.incrementProgressBy(1);
+									// }
+									// }
 
-										for (JSONObject campaignMember : failMessages) {
-											smsProgressBarMessage.setText("Registrando falhas de envio (" + i++ + "/" + sentMessages.size() + ")");
-
-											final String campaignMemberId = campaignMember.getString("Id");
-
-											Map<String, Object> fields = new HashMap<String, Object>();
-											fields.put("Status", "falha");
-											dataLoader.update(SalesforceDataLoader.SOBJ_CAMPAIGN_MEMBER, campaignMemberId, fields);
-
-											progressBar.incrementProgressBy(1);
-										}
+									private void updateCampaignMemberStatus_Fail(final String campaignMemberId) throws IOException {
+										Map<String, Object> fields = new HashMap<String, Object>();
+										fields.put("Status", "falha");
+										dataLoader.update(SalesforceDataLoader.SOBJ_CAMPAIGN_MEMBER, campaignMemberId, fields);
 									}
 
 									private void updateViewComponents() {
 										TextView numberOfMessagesSentView = (TextView) rootView.findViewById(R.id.numberOfMessagesSent);
 										TextView numberOfFailsView = (TextView) rootView.findViewById(R.id.numberOfFails);
-										numberOfMessagesSentView.setText(String.valueOf(sentMessages.size()));
-										numberOfFailsView.setText(String.valueOf(failMessages.size()));
+										numberOfMessagesSentView.setText(String.valueOf(sentMessages));
+										numberOfFailsView.setText(String.valueOf(failMessages));
 
 										progressBar.setVisibility(ProgressBar.INVISIBLE);
 										smsProgressBarMessage.setVisibility(TextView.INVISIBLE);
 									}
 
-									private void resetProgressBar(List<JSONObject> records, String message) {
-										progressBar.setMax(records.size());
-										progressBar.setProgress(0);
-										progressBar.setSecondaryProgress(0);
-										smsProgressBarMessage.setText(message);
-									}
+									// private void resetProgressBar(List<JSONObject> records, String message) {
+									// progressBar.setMax(records.size());
+									// progressBar.setProgress(0);
+									// progressBar.setSecondaryProgress(0);
+									// smsProgressBarMessage.setText(message);
+									// }
 
 									private void initViewComponentes(int numberOfMembers) {
 										progressBar.setMax(numberOfMembers);
@@ -299,48 +322,44 @@ public class CampaignDetailFragment extends MobileCampaignFragment {
 								});
 
 					} catch (UnsupportedEncodingException e) {
-						SalesforceSDKManager instance = SalesforceSDKManager.getInstance();
-						SalesforceR salesforceR = instance.getSalesforceR();
-						int stringGenericError = salesforceR.stringGenericError();
-						Activity activity = getActivity();
-						String strException = activity.getString(stringGenericError, e.toString());
-
-						Toast makeText = Toast.makeText(activity, strException, Toast.LENGTH_LONG);
-						makeText.show();
-
+						promptException(e);
 						e.printStackTrace();
 
 					} finally {
-						if (progressBar != null) {
-							progressBar.setVisibility(ProgressBar.INVISIBLE);
-							smsProgressBarMessage.setVisibility(TextView.INVISIBLE);
-						}
+						hideProgressBar();
 					}
 				}
 
 			});
 
 		} catch (JSONException e) {
-			SalesforceSDKManager instance = SalesforceSDKManager.getInstance();
-			SalesforceR salesforceR = instance.getSalesforceR();
-			int stringGenericError = salesforceR.stringGenericError();
-			Activity activity = getActivity();
-			String strException = activity.getString(stringGenericError, e.toString());
-
-			Toast makeText = Toast.makeText(activity, strException, Toast.LENGTH_LONG);
-			makeText.show();
-
+			promptException(e);
 			e.printStackTrace();
 
 		} finally {
-			if (progressBar != null) {
-				progressBar.setVisibility(ProgressBar.INVISIBLE);
-				smsProgressBarMessage.setVisibility(TextView.INVISIBLE);
-			}
+			hideProgressBar();
 
 		}
 
 		return rootView;
+	}
+
+	private void hideProgressBar() {
+		if (progressBar != null) {
+			progressBar.setVisibility(ProgressBar.INVISIBLE);
+			smsProgressBarMessage.setVisibility(TextView.INVISIBLE);
+		}
+	}
+
+	private void promptException(Exception e) {
+		SalesforceSDKManager instance = SalesforceSDKManager.getInstance();
+		SalesforceR salesforceR = instance.getSalesforceR();
+		int stringGenericError = salesforceR.stringGenericError();
+		Activity activity = getActivity();
+		String strException = activity.getString(stringGenericError, e.toString());
+
+		Toast makeText = Toast.makeText(activity, strException, Toast.LENGTH_LONG);
+		makeText.show();
 	}
 
 }
