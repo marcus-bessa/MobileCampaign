@@ -8,14 +8,10 @@ import java.util.Map;
 
 import org.json.JSONArray;
 
-import com.salesforce.androidsdk.app.SalesforceSDKManager;
-import com.salesforce.androidsdk.ui.SalesforceR;
-
 import android.app.AlertDialog;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.ContentResolver;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.database.Cursor;
 import android.net.Uri;
@@ -28,15 +24,18 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.salesforce.androidsdk.app.SalesforceSDKManager;
+import com.salesforce.androidsdk.ui.SalesforceR;
+
 /***************************************************************************
- * MobileCampaign - CampaignTypeFragment 
- * Fragment that appears in the "content_frame", shows a campaign list
+ * MobileCampaign - CampaignTypeFragment Fragment that appears in the "content_frame", shows a campaign list
  **************************************************************************/
 public class CampaignTypeFragment extends MobileCampaignFragment {
 
-	public  static final String ARG_TYPE_NUMBER   = "type_number";
-	private static final String SEND_SMS          = "Send SMS";
-	private static final String RECEIVE_SMS       = "Receive SMS";
+	public static final String ARG_TYPE_NUMBER = "type_number";
+	private static final String SEND_SMS = "Send SMS";
+	private static final String SEND_EMAIL = "Send E-mail";
+	private static final String RECEIVE_SMS = "Receive SMS";
 
 	private ArrayAdapter<String> listAdapter;
 
@@ -55,7 +54,7 @@ public class CampaignTypeFragment extends MobileCampaignFragment {
 		View rootView = inflater.inflate(R.layout.fragment_campaigntypes, container, false);
 
 		int i = getArguments().getInt(ARG_TYPE_NUMBER);
-		String campaignType = getResources().getStringArray( R.array.campaignTypes_array )[i];
+		String campaignType = getResources().getStringArray(R.array.campaignTypes_array)[i];
 
 		// Create list adapter
 		ArrayList<String> arrayList = new ArrayList<String>();
@@ -65,11 +64,14 @@ public class CampaignTypeFragment extends MobileCampaignFragment {
 		listView.setAdapter(listAdapter);
 		listView.setOnItemClickListener(new ListItemClickListener());
 
-		if(SEND_SMS.equalsIgnoreCase(campaignType)) {
+		if (SEND_SMS.equalsIgnoreCase(campaignType)) {
 			sendSMS();
 
-		} else if(RECEIVE_SMS.equalsIgnoreCase(campaignType)) {
+		} else if (RECEIVE_SMS.equalsIgnoreCase(campaignType)) {
 			readSMS();
+
+		} else if (SEND_EMAIL.equalsIgnoreCase(campaignType)) {
+			sendEmail();
 
 		}
 
@@ -99,9 +101,9 @@ public class CampaignTypeFragment extends MobileCampaignFragment {
 
 				saveMessageToSalesforce(address, body);
 
-				contentResolver.delete(Uri.parse("content://sms"), "_id=?", new String[] {pid});
+				contentResolver.delete(Uri.parse("content://sms"), "_id=?", new String[] { pid });
 			}
-			
+
 			final AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
 			alertDialog.setTitle("Receber SMS");
 			alertDialog.setMessage("Mensagens recebidas");
@@ -111,7 +113,6 @@ public class CampaignTypeFragment extends MobileCampaignFragment {
 				}
 			});
 			alertDialog.show();
-
 
 		} catch (IOException e) {
 			SalesforceSDKManager instance = SalesforceSDKManager.getInstance();
@@ -137,18 +138,43 @@ public class CampaignTypeFragment extends MobileCampaignFragment {
 		dataLoader.insert(SalesforceDataLoader.SOBJ_MENSAGEM__C, fields);
 	}
 
-
+	/*****************************************************************************
+	 * Send SMS
+	 ****************************************************************************/
 	private void sendSMS() {
 		try {
 
 			String soql = getResources().getString(R.string.query_SMS_Campaigns);
 
-			dataLoader.query( SalesforceDataLoader.SOBJ_CAMPAIGN
-					, soql
-					, new AbstractCommand() {
+			dataLoader.query(SalesforceDataLoader.SOBJ_CAMPAIGN, soql, new AbstractCommand() {
 				@Override
 				public void execute() throws Exception {
-					JSONArray records = (JSONArray)this.args.get(ARG_RECORDS);
+					JSONArray records = (JSONArray) this.args.get(ARG_RECORDS);
+
+					listAdapter.clear();
+					for (int i = 0; i < records.length(); i++) {
+						listAdapter.add(records.getJSONObject(i).getString("Name"));
+					}
+				}
+			});
+
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+	}
+
+	/*****************************************************************************
+	 * Send Email
+	 ****************************************************************************/
+	private void sendEmail() {
+		try {
+
+			String soql = getResources().getString(R.string.query_Email_Campaigns);
+
+			dataLoader.query(SalesforceDataLoader.SOBJ_CAMPAIGN, soql, new AbstractCommand() {
+				@Override
+				public void execute() throws Exception {
+					JSONArray records = (JSONArray) this.args.get(ARG_RECORDS);
 
 					listAdapter.clear();
 					for (int i = 0; i < records.length(); i++) {
@@ -163,8 +189,7 @@ public class CampaignTypeFragment extends MobileCampaignFragment {
 	}
 
 	/***************************************************************************
-	 * Android - ListItemSelectedListener 
-	 * The click listener for ListView in the campaigns list
+	 * Android - ListItemSelectedListener The click listener for ListView in the campaigns list
 	 **************************************************************************/
 	private class ListItemClickListener implements AdapterView.OnItemClickListener {
 
@@ -174,6 +199,7 @@ public class CampaignTypeFragment extends MobileCampaignFragment {
 			fragment.setSalesforceDataLoader(dataLoader);
 
 			Bundle args = new Bundle();
+
 			args.putInt(CampaignDetailFragment.ARG_RECORD_ID, position);
 			fragment.setArguments(args);
 

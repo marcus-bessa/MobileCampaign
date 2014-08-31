@@ -26,10 +26,26 @@
              , NumberSent
              , NumberOfContacts
              , NumberOfResponses
-             , Mensagem_SMS__c 
+             , Email_Subject__c
+             , Email_Body__c
         FROM Campaign 
         WHERE IsActive = true 
           AND Mensagem_SMS__c != \'\' 
+        ORDER BY NAME
+    </string>
+
+    <string name="query_Email_Campaigns">
+        SELECT ID
+             , Name
+             , NumberSent
+             , NumberOfContacts
+             , NumberOfResponses
+             , Email_Subject__c
+             , Email_Body__c
+        FROM Campaign 
+        WHERE IsActive = true 
+          AND Email_Subject__c != \'\' 
+          AND Email_Body__c != \'\' 
         ORDER BY NAME
     </string>
 
